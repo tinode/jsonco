@@ -83,7 +83,7 @@ var tests = map[string]string{
 		"],`,
 }
 
-var off_test = `{
+var offsetTest = `{
 		// a
 		"x": "y", /* bbb 
 		*/
@@ -91,10 +91,10 @@ var off_test = `{
 		"x": "y", // c
 	}`
 
-var off_expect = map[int64][]int{
-	12: []int{3, 2},
-	58: []int{5, 22},
-	78: []int{6, 2},
+var offsetExpect = map[int64][]int{
+	12: {3, 2},
+	58: {5, 22},
+	78: {6, 2},
 }
 
 func TestMain(t *testing.T) {
@@ -112,9 +112,9 @@ func TestMain(t *testing.T) {
 
 func TestOffset(t *testing.T) {
 	buf := &bytes.Buffer{}
-	jbuf := New(strings.NewReader(off_test))
+	jbuf := New(strings.NewReader(offsetTest))
 	io.Copy(buf, jbuf)
-	for off, lnc := range off_expect {
+	for off, lnc := range offsetExpect {
 		ln, cn, err := jbuf.LineAndChar(off)
 		if err != nil {
 			t.Error("unexpected error", err)
