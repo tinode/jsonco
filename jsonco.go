@@ -18,6 +18,8 @@ type state struct {
 	br *bytes.Reader
 }
 
+// ReadOffsetter is the interface that wraps the basic Read method and a LineAndChar method which converts byte
+// offset into line and character position.
 type ReadOffsetter interface {
 	io.Reader
 	LineAndChar(offset int64) (ln int, cn int, err error)
