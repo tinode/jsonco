@@ -58,15 +58,15 @@ If a parsing error is encountered, its location can be found like this:
 if err := json.NewDecoder(jr).Decode(&v); err != nil {
 	switch jerr := err.(type) {
 	case *json.UnmarshalTypeError:
-		lnum, cnum, _ := jr.LineAndChar(file, jerr.Offset)
+		lnum, cnum, _ := jr.LineAndChar(jerr.Offset)
 		fmt.Fatalf("Unmarshall error in %s at %d:%d (offset %d bytes): %s",
 			jerr.Field, lnum, cnum, jerr.Offset, jerr.Error())
 	case *json.SyntaxError:
-		lnum, cnum, _ := jr.LineAndChar(file, jerr.Offset)
+		lnum, cnum, _ := jr.LineAndChar(jerr.Offset)
 		fmt.Fatalf("Syntax error at %d:%d (offset %d bytes): %s",
 			lnum, cnum, jerr.Offset, jerr.Error())
 	default:
-		fmt.Fatalln("Failed to parse: ", err)
+		fmt.Fatalln("Failed to parse:", err)
 	}
 }
 
